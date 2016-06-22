@@ -1,16 +1,20 @@
 package com.example.shivamagrawal.taskranker2;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.TimePicker;
 import android.widget.DatePicker;
 import android.widget.Button;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.content.Intent;
 import java.util.Calendar;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,8 +23,16 @@ import java.text.SimpleDateFormat;
 public class AddTask extends AppCompatActivity implements OnTimeSetListener, OnDateSetListener {
 
     private Toolbar toolbar;
+
+    private EditText taskInput;
+
     private Button setDate;
     private Button setTime;
+
+    private SeekBar importanceBar;
+    private SeekBar sizeBar;
+    private SeekBar difficultyBar;
+    private SeekBar completionBar;
 
     private int[] time;
     private int[] date;
@@ -33,14 +45,35 @@ public class AddTask extends AppCompatActivity implements OnTimeSetListener, OnD
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
 
+        taskInput = (EditText) findViewById(R.id.task_desc);
+
         setDate = (Button) findViewById(R.id.pickDate);
         setTime = (Button) findViewById(R.id.pickTime);
+
+        importanceBar = (SeekBar) findViewById(R.id.importance_slider);
+        sizeBar = (SeekBar) findViewById(R.id.size_slider);
+        difficultyBar = (SeekBar) findViewById(R.id.difficulty_slider);
+        completionBar = (SeekBar) findViewById(R.id.completion_slider);
+
     }
 
     /* Main functions */
 
-    private void done() {
-
+    public void submitTask(View v) {
+        int importance = importanceBar.getProgress();
+        int size = sizeBar.getProgress();
+        int difficulty = difficultyBar.getProgress();
+        int completion = completionBar.getProgress();
+        String task = taskInput.getText().toString();
+        if (time != null && date != null && task != null) {
+            Task t = new Task(time, date, task, importance, size, difficulty, completion);
+            Intent output = new Intent();
+            output.putExtra(MainActivity.AddTaskDataKey, t);
+            setResult(Activity.RESULT_OK, output);
+            finish();
+        } else {
+            // show error
+        }
     }
 
     /* Menu Functions */
@@ -67,10 +100,7 @@ public class AddTask extends AppCompatActivity implements OnTimeSetListener, OnD
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
         date = new int[] { year, month, day };
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
-        DateFormat dateInstance = SimpleDateFormat.getDateInstance();
-        String formattedDate = dateInstance.format(calendar.getTime());
+        String formattedDate = Helper.formatDate(date);
         setDate.setText(formattedDate);
     }
 
@@ -84,11 +114,7 @@ public class AddTask extends AppCompatActivity implements OnTimeSetListener, OnD
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         time = new int[] { hourOfDay, minute };
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-        calendar.set(Calendar.MINUTE, minute);
-        DateFormat timeInstance = SimpleDateFormat.getTimeInstance(DateFormat.SHORT);
-        String formattedTime = timeInstance.format(calendar.getTime());
+        String formattedTime = Helper.formatTime(time);
         setTime.setText(formattedTime);
     }
 

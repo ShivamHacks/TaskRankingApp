@@ -1,6 +1,9 @@
 package com.example.shivamagrawal.taskranker2;
 
-public class Task {
+import android.os.Parcelable;
+import android.os.Parcel;
+
+public class Task implements Parcelable {
 
     private int[] time;
     private int[] date;
@@ -18,6 +21,18 @@ public class Task {
         this.size = size;
         this.difficulty = difficulty;
         this.completed = completed;
+    }
+
+    public Task(Parcel in) {
+        time = new int[2];
+        in.readIntArray(time);
+        date = new int[3];
+        in.readIntArray(date);
+        task = in.readString();
+        importance = in.readInt();
+        size = in.readInt();
+        difficulty = in.readInt();
+        completed = in.readInt();
     }
 
     public int[] getTime() { return time; }
@@ -40,5 +55,32 @@ public class Task {
 
     public int getCompleted() { return completed; }
     public void setCompleted(int completed) { this.completed = completed; }
+
+    /* everything below here is for implementing Parcelable */
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeIntArray(time);
+        out.writeIntArray(date);
+        out.writeString(task);
+        out.writeInt(importance);
+        out.writeInt(size);
+        out.writeInt(difficulty);
+        out.writeInt(completed);
+    }
+
+    public static final Parcelable.Creator<Task> CREATOR = new Parcelable.Creator<Task>() {
+        public Task createFromParcel(Parcel in) {
+            return new Task(in);
+        }
+        public Task[] newArray(int size) {
+            return new Task[size];
+        }
+    };
 
 }

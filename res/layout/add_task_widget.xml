@@ -30,16 +30,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Pick Date"
-            android:onClick="showDatePickerDialog"/>
+            android:onClick="showDatePickerDialog"
+            android:text="Pick Date" />
 
         <Button
             android:id="@+id/pickTime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Pick Time"
-            android:onClick="showTimePickerDialog"/>
+            android:onClick="showTimePickerDialog"
+            android:text="Pick Time" />
 
     </LinearLayout>
 
@@ -59,7 +59,9 @@
         <SeekBar
             android:id="@+id/importance_slider"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:max="10"
+            android:progress="1" />
 
     </LinearLayout>
 
@@ -79,7 +81,9 @@
         <SeekBar
             android:id="@+id/size_slider"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:max="10"
+            android:progress="1" />
 
     </LinearLayout>
 
@@ -99,7 +103,9 @@
         <SeekBar
             android:id="@+id/difficulty_slider"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:max="10"
+            android:progress="1" />
 
     </LinearLayout>
 
@@ -119,14 +125,17 @@
         <SeekBar
             android:id="@+id/completion_slider"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:max="10"
+            android:progress="1" />
 
     </LinearLayout>
 
     <Button
+        android:id="@+id/submit_task"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Done"
-        android:id="@+id/submit_task" />
+        android:onClick="submitTask"/>
 
 </LinearLayout>
