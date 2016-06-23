@@ -8,7 +8,7 @@
         android:id="@+id/action_add_task_back"
         android:orderInCategory="100"
         android:title="Back"
-        android:icon="@drawable/ic_arrow_back_white_24dp"
+        android:icon="@drawable/ic_home_white_24dp"
         app:showAsAction="ifRoom">
     </item>
 

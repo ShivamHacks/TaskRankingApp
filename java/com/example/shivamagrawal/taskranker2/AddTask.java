@@ -42,7 +42,8 @@ public class AddTask extends AppCompatActivity implements OnTimeSetListener, OnD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        toolbar = (Toolbar) findViewById(R.id.add_task_tool_bar);
+        toolbar.setTitle("Add a Task");
         setSupportActionBar(toolbar);
 
         taskInput = (EditText) findViewById(R.id.task_desc);
@@ -65,7 +66,7 @@ public class AddTask extends AppCompatActivity implements OnTimeSetListener, OnD
         int difficulty = difficultyBar.getProgress();
         int completion = completionBar.getProgress();
         String task = taskInput.getText().toString();
-        if (time != null && date != null && task != null) {
+        if (time != null && date != null && task != null && task !="") {
             Task t = new Task(time, date, task, importance, size, difficulty, completion);
             Intent output = new Intent();
             output.putExtra(MainActivity.AddTaskDataKey, t);
